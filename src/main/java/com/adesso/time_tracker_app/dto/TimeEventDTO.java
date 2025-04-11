@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Getter
 @Setter
@@ -14,8 +15,8 @@ import java.util.Date;
 public class TimeEventDTO {
     private int id;
 
-    private Date logDate;
-
+//    private Date logDate;
+    private LocalDate logDate;
     private int hoursLogged;
 
     private String description;

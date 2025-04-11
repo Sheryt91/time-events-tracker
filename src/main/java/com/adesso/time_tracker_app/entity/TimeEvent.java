@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -22,7 +23,8 @@ public class TimeEvent {
     private long id;
 
     @Column(name = "log-date")
-    private Date logDate;
+   // private Date logDate;
+    private LocalDate logDate;
 
     @Column(name = "hours-logged")
     private int hoursLogged;

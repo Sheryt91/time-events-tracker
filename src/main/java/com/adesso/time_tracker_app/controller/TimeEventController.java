@@ -30,11 +30,20 @@ public class TimeEventController {
         timeEventEntity.setLogDate(timeEventDto.getLogDate());
         return timeEventRepository.save(timeEventEntity);
     }
+    @PutMapping("/{id}")
+    public TimeEvent createTimeEvent(@PathVariable Long id, @RequestBody TimeEventDTO updatedTimeEventDto){
+        TimeEvent timeEventEntity= timeEventRepository.findById(id).orElseThrow();
+
+        timeEventEntity.setDescription(updatedTimeEventDto.getDescription());
+        timeEventEntity.setHoursLogged(updatedTimeEventDto.getHoursLogged());
+        timeEventEntity.setLogDate(updatedTimeEventDto.getLogDate());
+        return timeEventRepository.save(timeEventEntity);
+    }
+
 
     @DeleteMapping("/{id}" )
     public void deleteEvent(@PathVariable long  id) {
-      Optional<TimeEvent> eventToBeDeleted= Optional.of(new TimeEvent());
-      eventToBeDeleted=timeEventRepository.findById(id);
+      Optional<TimeEvent> eventToBeDeleted=timeEventRepository.findById(id);
       if(eventToBeDeleted.isPresent()){
           timeEventRepository.deleteById(id);
       }
