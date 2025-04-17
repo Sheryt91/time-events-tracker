@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
-@Table(name = "time-event")
+@Table(name = "time_event")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,15 +21,16 @@ public class TimeEvent {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "log-date")
-   // private Date logDate;
+    @Column(name = "log_date")
     private LocalDate logDate;
 
-    @Column(name = "hours-logged")
+    @Column(name = "hours_logged")
     private int hoursLogged;
 
     @Column(name = "description")
     private String description;
 
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
