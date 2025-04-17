@@ -39,6 +39,11 @@ public class UIConfigController {
                 Map.of(FIELD, "logDate", LABEL, "Date", TYPE, "date", REQUIRED, true),
                 Map.of(FIELD, "hoursLogged", LABEL, "Hours", TYPE, "number", REQUIRED, true)
         ));
+
+            config.put("loginFields", List.of(
+                    Map.of(FIELD, "username", LABEL, "Username", TYPE, "text", REQUIRED, true),
+                    Map.of(FIELD, "password", LABEL, "Password", TYPE, "password", REQUIRED, true)
+            ));
             logger.log(Level.INFO,"Returning config:{0} ", config);
 
         return ResponseEntity.ok(config);
