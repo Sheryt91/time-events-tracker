@@ -29,7 +29,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults()) // ← this line enables CORS
+                .cors(Customizer.withDefaults())// ← this line enables CORS
+//                .cors(cors -> cors.configurationSource(request -> {
+//                    var config = new CorsConfiguration();
+//                    config.setAllowedOrigins(List.of("http://localhost:4200"));
+//                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+//                    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+//                    config.setAllowCredentials(true);
+//                    return config;
+//                })) // ← this line enables CORS
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/uiconfig/**").permitAll()
@@ -52,7 +60,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:4200"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true); // important if you're sending cookies or auth headers
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

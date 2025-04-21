@@ -33,6 +33,10 @@ public class TimeEventServiceImpl implements TimeEventService {
         timeEventEntity.setDescription(timeEventDto.getDescription());
         timeEventEntity.setHoursLogged(timeEventDto.getHoursLogged());
         timeEventEntity.setLogDate(timeEventDto.getLogDate());
+
+        User user = userRepository.findByUsername(timeEventDto.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        timeEventEntity.setUser(user);
         return timeEventRepository.save(timeEventEntity);
     }
 
