@@ -13,11 +13,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TimeEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "time_event_seq")
+    @SequenceGenerator(name = "time_event_seq", sequenceName = "time_event_seq", allocationSize = 1)
     @Column(name = "id")
     private long id;
 

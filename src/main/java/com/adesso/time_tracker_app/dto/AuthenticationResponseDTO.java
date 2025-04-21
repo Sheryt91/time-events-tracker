@@ -5,15 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeEventDTO {
-    private int id;
-    private LocalDate logDate;
-    private int hoursLogged;
-    private String description;
+public class AuthenticationResponseDTO {
+    private String token;
     private String username;
 }
