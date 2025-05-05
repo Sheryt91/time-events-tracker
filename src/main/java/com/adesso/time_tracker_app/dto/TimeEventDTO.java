@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class TimeEventDTO {
     private int id;
     private LocalDate logDate;
-    private int hoursLogged;
+    private BigDecimal hoursLogged;
     private String description;
     private String username;
 }

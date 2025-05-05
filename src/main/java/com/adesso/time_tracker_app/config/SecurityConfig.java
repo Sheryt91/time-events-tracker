@@ -29,18 +29,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
-                .cors(Customizer.withDefaults())// ← this line enables CORS
-//                .cors(cors -> cors.configurationSource(request -> {
-//                    var config = new CorsConfiguration();
-//                    config.setAllowedOrigins(List.of("http://localhost:4200"));
-//                    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-//                    config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-//                    config.setAllowCredentials(true);
-//                    return config;
-//                })) // ← this line enables CORS
-
+                .cors(Customizer.withDefaults())// ← this line enables CORS CorsConfigurationSource bean,we can aslo copy paste contents inside
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/uiconfig/**").permitAll()
+                        .requestMatchers("/api/time-events/all-events").hasRole("ADMIN")
+                        .requestMatchers("/api/time-events/my-events").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -55,6 +48,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

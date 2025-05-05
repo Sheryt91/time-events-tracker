@@ -2,12 +2,15 @@ package com.adesso.time_tracker_app.service;
 
 import com.adesso.time_tracker_app.dto.AuthRequestDTO;
 import com.adesso.time_tracker_app.dto.AuthenticationResponseDTO;
-import com.adesso.time_tracker_app.entity.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthService {
@@ -28,11 +31,23 @@ public class AuthService {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
             );
         } catch (AuthenticationException ex) {
-            throw new RuntimeException("Invalid username or password", ex);
+            throw new IllegalArgumentException("Invalid username or password", ex);
         }
 
+        // Load user details (including roles)
         UserDetails user = customUserDetailsService.loadUserByUsername(request.getUsername());
-        String token= jwtService.generateToken(user.getUsername());
-        return new AuthenticationResponseDTO(token, user.getUsername());
+
+        // Extract roles from user details
+        List<String> roles = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+
+        // Pass roles as a claim
+        Map<String, Object> claims = Map.of("roles", roles);
+
+        // Generate JWT token with roles
+        String token = jwtService.generateToken(claims, user.getUsername());
+
+        return new AuthenticationResponseDTO(token, user.getUsername(), roles);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,7 +24,8 @@ public class TimeEventController {
         this.timeEventService = timeEventService;
     }
 
-    @GetMapping("")
+
+    @GetMapping("/all-events")
     public List<TimeEvent> getAllEvents(){
         return timeEventService.getAllEvents();
     }
@@ -38,7 +40,7 @@ public class TimeEventController {
             logger.info("Logged in as: " + auth.getName());
             return timeEventService.getEventsByUsername(auth.getName());
         }
-        return null;
+        return Collections.emptyList();
 
     }
 
