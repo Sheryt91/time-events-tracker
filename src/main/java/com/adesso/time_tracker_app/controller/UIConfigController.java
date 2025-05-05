@@ -31,13 +31,14 @@ public class UIConfigController {
         config.put("columns", List.of(
                 Map.of(FIELD, "description", HEADER, "Description"),
                 Map.of(FIELD, "logDate", HEADER, "Date"),
-                Map.of(FIELD, "hoursLogged", HEADER, "Hours")
+                Map.of(FIELD, "hoursLogged", HEADER, "Hours"),
+                Map.of(FIELD, "user", HEADER, "Username")
         ));
 
         config.put("dialogFields", List.of(
                 Map.of(FIELD, "description", LABEL, "Description", TYPE, "text", REQUIRED, true),
                 Map.of(FIELD, "logDate", LABEL, "Date", TYPE, "date", REQUIRED, true),
-                Map.of(FIELD, "hoursLogged", LABEL, "Hours", TYPE, "number", REQUIRED, true)
+                Map.of(FIELD, "hoursLogged", LABEL, "Hours", TYPE, "text", REQUIRED, true)
         ));
 
             config.put("loginFields", List.of(

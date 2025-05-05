@@ -11,6 +11,7 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -20,6 +21,7 @@ public class JwtService {
     // Secret key (256-bit for HS256)
     private static final String SECRET_KEY = "d348f99e45ae9e3789a602c17e85c657d348f99e45ae9e3789a602c17e85c657";
     private final Key signingKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private static final long expirationTime = 3600000;  // 1 hour expiration
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
@@ -33,7 +35,7 @@ public class JwtService {
                 .claims(extraClaims)
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .expiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSigningKey());
 
         return jwtBuilder.compact();
@@ -46,6 +48,7 @@ public class JwtService {
 
     // Extract username
     public String extractUsername(String token) {
+
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -74,6 +77,12 @@ public class JwtService {
 
         return jwtParser.parseSignedClaims(token)
                 .getPayload();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> extractRoles(String token) {
+        Claims claims = parseToken(token);
+        return (List<String>) claims.get("roles");
     }
 
 }

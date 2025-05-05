@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -19,13 +20,13 @@ public class TimeEvent {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "time_event_seq")
     @SequenceGenerator(name = "time_event_seq", sequenceName = "time_event_seq", allocationSize = 1)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "log_date")
     private LocalDate logDate;
 
     @Column(name = "hours_logged")
-    private int hoursLogged;
+    private BigDecimal hoursLogged;
 
     @Column(name = "description")
     private String description;
